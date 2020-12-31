@@ -1,5 +1,8 @@
-##Word Press 优化
+Word Press 优化
+==
+------
 
+针对wordpress的一些功能进行优化，目前优化的内容包含以下几个方面（不定期更新，根据自己的需求，不承接用户需求）：  
 1. 支持分词搜索  
 通过jieba-php让wordpress支持分词搜索  
 代码 functions.php  
@@ -15,6 +18,7 @@
 ![buddy](screen_shots/buddypress.png)  
 
 所有修改的文件都是主题下对应的文件！  
+Wordpress使用主题Olsen Light，使用其他主题不要直接进行文件替换，根据文章中的操作方法进行代码修改即可。
 
 [obaby@mars](http://www.h4ck.org.cn)  
 [http://www.obaby.org.cn](http://www.obaby.org.cn)  
