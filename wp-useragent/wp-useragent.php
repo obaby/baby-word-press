@@ -247,14 +247,22 @@ function wpua_display_useragent($wpua_wrapper_div = false) {
         	$wpua_useragent.=  convertip($ip);
         }
         if ($wpua_show_text_icons === 'text')
+        {
 		$wpua_useragent.=  '  '.  convertip($ip);
+	}
+	if ($wpua_show_text_icons === 'icons'){
+			$wpua_useragent.= '  '. CID_get_flag_without_template($ip, true, false);
+	}
     }
      if ($wpua_show_ip_address === 'true') {
      	 if ($wpua_show_text_icons === 'icons_and_text' )
+     	 {
 		$wpua_useragent.= '  '.  '<img src="'.WP_PLUGIN_URL.'/wp-useragent/img/' .$wpua_icon_size . '/network/ip3.png" title="ip address" alt="ip address" class="ip-address" width="$wpua_icon_size" height="$wpua_icon_size" />';
 		 $wpua_useragent.= '  '. ip2unkonw($ip);
-	if ($wpua_show_text_icons === 'text')
+		 }
+	if ($wpua_show_text_icons === 'text'){
 		$wpua_useragent.= '  '. ip2unkonw($ip);
+	}
      }
     // Does the user want to display the full useragent string?
     if ($wpua_show_full_ua === 'true') {
