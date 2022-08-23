@@ -1,9 +1,9 @@
 <?php
 /*
- * Plugin Name: WP-UserAgent Obaby Version
+ * Plugin Name: WP-UserAgent [增强版 by obaby]
  * Plugin URI: https://www.kyleabaker.com/goodies/coding/wp-useragent/
  * Description: 加强版评论UA显示插件，支持显示国家以及当前用户归属地
- * Version: 11.0.1
+ * Version: 11.0.2
  * Author: Kyle Baker(Upgrade by obaby@mars)
  * Author URI: https://www.kyleabaker.com/
  * Text Domain: wp-useragent
@@ -43,8 +43,8 @@ include (WP_PLUGIN_DIR . '/wp-useragent/wp-useragent-detect-platform.php');
 include (WP_PLUGIN_DIR . '/wp-useragent/wp-useragent-detect-trackback.php');
 include (WP_PLUGIN_DIR . '/wp-useragent/wp-useragent-detect-webbrowser.php');
 include (WP_PLUGIN_DIR . '/wp-useragent/wp-useragent-detect-webbrowser-version.php');
-include ("show-useragent/show-useragent.php");
-include ("show-useragent/ip2c-text.php");
+include (WP_PLUGIN_DIR . '/wp-useragent/show-useragent/show-useragent.php');
+include (WP_PLUGIN_DIR . '/wp-useragent/show-useragent/ip2c-text.php');
 // Plugin Options
 $wpua_img_url = WP_PLUGIN_URL . '/wp-useragent/img/';
 $wpua_doctype = get_option('wpua_doctype');
@@ -60,6 +60,7 @@ $wpua_text_links = get_option('wpua_text_links');
 $wpua_show_full_ua = get_option('wpua_show_full_ua');
 $wpua_hide_unknown_ua = get_option('wpua_hide_unknown_ua');
 $wpua_show_country_flag = get_option('wpua_show_country_flag');
+$wpua_show_ip_address = get_option('wpua_show_ip_address');
 $wpua_admin_only = get_option('wpua_admin_only');
 $wpua_output_location = get_option('wpua_output_location');
 // Migrate settings from previous database schema if necessary
@@ -92,6 +93,7 @@ if (empty($wpua_output_location) && !empty($wpua_old_output_location)) {
     if (!add_option('wpua_show_full_ua', $wpua_show_full_ua, '', 'no')) update_option('wpua_show_full_ua', $wpua_show_full_ua);
     if (!add_option('wpua_hide_unknown_ua', $wpua_hide_unknown_ua, '', 'no')) update_option('wpua_hide_unknown_ua', $wpua_hide_unknown_ua);
     if (!add_option('wpua_show_country_flag', $wpua_show_country_flag, '', 'no')) update_option('wpua_show_country_flag', $wpua_show_country_flag);
+     if (!add_option('wpua_show_ip_address', $wpua_show_ip_address, '', 'no')) update_option('wpua_show_ip_address', $wpua_show_ip_address);
     if (!add_option('wpua_admin_only', $wpua_admin_only, '', 'no')) update_option('wpua_admin_only', $wpua_admin_only);
     if (!add_option('wpua_output_location', $wpua_output_location, '', 'no')) update_option('wpua_output_location', $wpua_output_location);
     // New schema is initialized, ready to purge old schema...
@@ -129,6 +131,7 @@ if (empty($wpua_text_links)) $wpua_text_links = 'false';
 if (empty($wpua_show_full_ua)) $wpua_show_full_ua = 'true';
 if (empty($wpua_hide_unknown_ua)) $wpua_hide_unknown_ua = 'false';
 if (empty($wpua_show_country_flag)) $wpua_show_country_flag = 'false';
+if (empty($wpua_show_ip_address)) $wpua_show_ip_address = 'false';
 if (empty($wpua_admin_only)) $wpua_admin_only = 'false';
 if (empty($wpua_output_location)) $wpua_output_location = 'before';
 // Safe escape user entered input
@@ -194,11 +197,18 @@ function wpua_custom_output() {
         wpua_display_useragent();
     }
 }
+
+function ip2unkonw($ip)
+{
+    $arrip = explode('.', $ip, 4);
+    return $arrip[0]. '.'. $arrip[1]. '.*.*';//隐藏后两位
+    //return $arrip[0].*.*.'. $arrip[3]';//隐藏中间两位
+}
 /**
  * Generates html markup for final user agent output
  */
 function wpua_display_useragent($wpua_wrapper_div = false) {
-    global $comment, $wpua_show_text_icons, $wpua_text_using, $wpua_text_on, $wpua_text_via, $wpua_show_full_ua, $wpua_hide_unknown_ua, $wpua_show_country_flag, $wpua_doctype;
+    global $comment, $wpua_show_text_icons, $wpua_text_using, $wpua_text_on, $wpua_text_via, $wpua_show_full_ua, $wpua_hide_unknown_ua,$wpua_show_ip_address, $wpua_show_country_flag, $wpua_doctype, $wpua_icon_size;
     // Check if the comment is a trackback or a comment
     $wpua_useragent = '';
     if ($comment->comment_type === 'trackback' || $comment->comment_type === 'pingback') {
@@ -226,14 +236,26 @@ function wpua_display_useragent($wpua_wrapper_div = false) {
             $wpua_useragent = ($wpua_show_text_icons === 'icons_and_text' || $wpua_show_text_icons === 'text') ? "$wpua_text_using $webbrowser $wpua_text_on $platform" : $webbrowser . $platform;
         }
     }
+    $ip = get_comment_author_IP();
     if ($wpua_show_country_flag === 'true') {
-        $ip = get_comment_author_IP();
+        
         // 	echo $ip;
         // 	echo CID_get_flag_without_template($ip);
         //echo convertip($ip);
-        $wpua_useragent.= CID_get_flag_without_template($ip, true, false);
-        $wpua_useragent.= convertip($ip);
+        if ($wpua_show_text_icons === 'icons_and_text' ){
+        	$wpua_useragent.= '  '. CID_get_flag_without_template($ip, true, false);
+        	$wpua_useragent.=  convertip($ip);
+        }
+        if ($wpua_show_text_icons === 'text')
+		$wpua_useragent.=  '  '.  convertip($ip);
     }
+     if ($wpua_show_ip_address === 'true') {
+     	 if ($wpua_show_text_icons === 'icons_and_text' )
+		$wpua_useragent.= '  '.  '<img src="'.WP_PLUGIN_URL.'/wp-useragent/img/' .$wpua_icon_size . '/network/ip2.png" title="ip address" alt="ip address" class="ip-address" width="$wpua_icon_size" height="$wpua_icon_size" />';
+		 $wpua_useragent.= '  '. ip2unkonw($ip);
+	if ($wpua_show_text_icons === 'text')
+		$wpua_useragent.= '  '. ip2unkonw($ip);
+     }
     // Does the user want to display the full useragent string?
     if ($wpua_show_full_ua === 'true') {
         // Attach the full ua string to the output.
@@ -330,6 +352,7 @@ function wpua_activation() {
     if (!add_option('wpua_show_full_ua', '', '', 'no')) update_option('wpua_show_full_ua', '');
     if (!add_option('wpua_hide_unknown_ua', '', '', 'no')) update_option('wpua_hide_unknown_ua', '');
     if (!add_option('wpua_show_country_flag', '', '', 'no')) update_option('wpua_show_country_flag', '');
+     if (!add_option('wpua_show_ip_address', '', '', 'no')) update_option('wpua_show_ip_address', '');
     if (!add_option('wpua_admin_only', '', '', 'no')) update_option('wpua_admin_only', '');
     if (!add_option('wpua_output_location', '', '', 'no')) update_option('wpua_output_location', '');
 }

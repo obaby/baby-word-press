@@ -103,6 +103,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 			$wpua_show_full_ua     = get_option('wpua_show_full_ua');
 			$wpua_hide_unknown_ua  = get_option('wpua_hide_unknown_ua');
 			$wpua_show_country_flag  = get_option('wpua_show_country_flag');
+			$wpua_show_ip_address  = get_option('wpua_show_ip_address');
 			$wpua_admin_only       = get_option('wpua_admin_only');
 			$wpua_output_location  = get_option('wpua_output_location');
 
@@ -138,6 +139,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 				if ( ! add_option( 'wpua_show_full_ua', $wpua_show_full_ua, '', 'no' ) ) update_option( 'wpua_show_full_ua', $wpua_show_full_ua );
 				if ( ! add_option( 'wpua_hide_unknown_ua', $wpua_hide_unknown_ua, '', 'no' ) ) update_option( 'wpua_hide_unknown_ua', $wpua_hide_unknown_ua );
 				if ( ! add_option( 'wpua_show_country_flag', $wpua_show_country_flag, '', 'no' ) ) update_option( 'wpua_show_country_flag', $wpua_show_country_flag );
+				if ( ! add_option( 'wpua_show_ip_address', $wpua_show_ip_address, '', 'no' ) ) update_option( 'wpua_show_ip_address', $wpua_show_ip_address );
 				if ( ! add_option( 'wpua_admin_only', $wpua_admin_only, '', 'no' ) ) update_option( 'wpua_admin_only', $wpua_admin_only );
 				if ( ! add_option( 'wpua_output_location', $wpua_output_location, '', 'no' ) ) update_option( 'wpua_output_location', $wpua_output_location );
 
@@ -178,6 +180,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 			if (empty($wpua_show_full_ua)) $wpua_show_full_ua = 'true';
 			if (empty($wpua_hide_unknown_ua)) $wpua_hide_unknown_ua = 'false';
 			if (empty($wpua_show_country_flag)) $wpua_show_country_flag = 'false';
+			if (empty($wpua_show_ip_address)) $wpua_show_ip_address = 'false';
 			if (empty($wpua_admin_only)) $wpua_admin_only = 'false';
 			if (empty($wpua_output_location)) $wpua_output_location = 'before';
 
@@ -193,6 +196,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 			<a href="https://wordpress.org/support/plugin/wp-useragent" target="_blank" class="button"><?php _e('Support', 'wp-useragent'); ?></a>
 			<a href="https://wordpress.org/plugins/wp-useragent/changelog/" target="_blank" class="button"><?php _e('Changelog', 'wp-useragent'); ?></a>
 			<a href="https://translate.wordpress.org/projects/wp-plugins/wp-useragent" target="_blank" class="button"><?php _e('Translate', 'wp-useragent'); ?></a>
+			<strong><?php _e('Plugin Homepage', 'wp-useragent'); ?>:</strong> <a href="http://h4ck.org.cn/">obaby@mars</a><br />
 			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=3S4Q4FH7BH9EG&item_name=Wordpress%20Plugin%20(WP-UserAgent)&no_shipping=1&no_note=1&tax=0&currency_code=USD&bn=PP%2dDonationsBF&charset=UTF%2d8&lc=US" target="_blank" class="button" title="<?php _e('Donate to Kyle Baker (kyleabaker.com) for this plugin via PayPal', 'wp-useragent'); ?>"><?php _e('Donate', 'wp-useragent'); ?></a>
 		</p>
 		<div id="poststuff" class="metabox-holder">
@@ -353,6 +357,15 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 											</select>
 										</td>
 									</tr>
+									<tr>
+										<th><?php _e('Show User IP Address', 'wp-useragent'); ?>:</th>
+										<td>
+											<select id="wpua_show_ip_address" name="wpua_show_ip_address">
+												<option value="true" <?php if ($wpua_show_ip_address === 'true') echo 'selected="selected"'; ?>><?php _e('Yes', 'wp-useragent'); ?></option>
+												<option value="false" <?php if ($wpua_show_ip_address !== 'true') echo 'selected="selected"'; ?>><?php _e('No', 'wp-useragent'); ?></option>
+											</select>
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
@@ -485,8 +498,8 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 											<p>
 												<?php _e('If you have any problems, questions, comments or suggestions regarding WP-UserAgent please don\'t hesitate to contact me.', 'wp-useragent'); ?><br />
 												<strong><?php _e('Author', 'wp-useragent'); ?>:</strong> Kyle Baker (kyleabaker) - <a href="http://twitter.com/kyleabaker">Twitter</a><br />
-												<strong><?php _e('Plugin Homepage', 'wp-useragent'); ?>:</strong> <a href="http://h4ck.org.cn/2022/08/wordpress-%E8%AF%84%E8%AE%BA%E6%98%BE%E7%A4%BAip%E5%BD%92%E5%B1%9E%E5%9C%B0%E6%8F%92%E4%BB%B6/">https://www.h4ck.org.cn</a><br />
-								<strong><?php _e('增强版主页', 'wp-useragent'); ?>:</strong> <a href="http://www.h4ck.org.cn">http://www.h4ck.org.cn</a><br />
+												<strong><?php _e('Plugin Homepage', 'wp-useragent'); ?>:</strong> <a href="http://h4ck.org.cn/">https://www.h4ck.org.cn</a><br />
+								<strong><?php _e('增强版主页', 'wp-useragent'); ?>:</strong> <a href="http://h4ck.org.cn/2022/08/wordpress-%E8%AF%84%E8%AE%BA%E6%98%BE%E7%A4%BAip%E5%BD%92%E5%B1%9E%E5%9C%B0%E6%8F%92%E4%BB%B6/">http://www.h4ck.org.cn</a><br />
 												<?php _e('Help me afford the cost of maintaining this plugin and the work that goes into it!', 'wp-useragent'); ?> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=3S4Q4FH7BH9EG&item_name=Wordpress%20Plugin%20(WP-UserAgent)&no_shipping=1&no_note=1&tax=0&currency_code=USD&bn=PP%2dDonationsBF&charset=UTF%2d8&lc=US" target="_new"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" name="submit" alt="<?php _e('Donate to Kyle Baker (kyleabaker.com) for this plugin via PayPal', 'wp-useragent'); ?>" title="<?php _e('Donate to Kyle Baker (kyleabaker.com) for this plugin via PayPal', 'wp-useragent'); ?>" style="float:right" /></a>
 											</p>
 										</td>
@@ -497,7 +510,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 					</div>
 
 					<input type="hidden" name="action" value="update" />
-					<input type="hidden" name="page_options" value="wpua_doctype, wpua_icon_size, wpua_show_text_icons, wpua_icon_style, wpua_icon_style_input, wpua_text_using, wpua_text_on, wpua_text_via, wpua_show_version, wpua_text_links, wpua_show_full_ua, wpua_hide_unknown_ua, wpua_show_country_flag,wpua_admin_only, wpua_output_location" />
+					<input type="hidden" name="page_options" value="wpua_doctype, wpua_icon_size, wpua_show_text_icons, wpua_icon_style, wpua_icon_style_input, wpua_text_using, wpua_text_on, wpua_text_via, wpua_show_version, wpua_text_links, wpua_show_full_ua, wpua_hide_unknown_ua, wpua_show_country_flag,wpua_show_ip_address,wpua_admin_only, wpua_output_location" />
 
 					<input type="button" name="Reset" class="button-primary reset" value="<?php _e('Reset Defaults', 'wp-useragent'); ?>" />
 					<input type="submit" name="Submit" class="button-primary" value="<?php _e('Save Changes', 'wp-useragent'); ?>" />
@@ -537,6 +550,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 					$wpua_show_full_ua = $wpua_useragent.find('#wpua_show_full_ua'),
 					$wpua_hide_unknown_ua = $wpua_useragent.find('#wpua_hide_unknown_ua'),
 					$wpua_show_country_flag = $wpua_useragent.find('#wpua_show_country_flag'),
+					$wpua_show_ip_address = $wpua_useragent.find('#wpua_show_ip_address'),
 					// Display location
 					$wpua_admin_only = $wpua_useragent.find('#wpua_admin_only'),
 					$wpua_output_location = $wpua_useragent.find('#wpua_output_location'),
@@ -549,7 +563,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 					$wpua_string_top = $wpua_useragent.find('#wpua_string_top'),
 
 				// Element event groups
-					$change = $wpua_useragent.find('#wpua_icon_size,#wpua_show_text_icons,#wpua_show_version,#wpua_text_links,#wpua_show_full_ua,#wpua_hide_unknown_ua,#wpua_show_country_flag,#wpua_output_location'),
+					$change = $wpua_useragent.find('#wpua_icon_size,#wpua_show_text_icons,#wpua_show_version,#wpua_text_links,#wpua_show_full_ua,#wpua_hide_unknown_ua,#wpua_show_country_flag,#wpua_show_ip_address,#wpua_output_location'),
 					$keyup = $wpua_useragent.find('#wpua_icon_style_input,#wpua_text_using,#wpua_text_on,#wpua_text_via');
 
 				// Generate Comment Preview
@@ -635,6 +649,7 @@ defined( 'ABSPATH' ) or die( 'Cannot access pages directly.' );
 						$wpua_show_full_ua.val('true');
 						$wpua_hide_unknown_ua.val('false');
 						$wpua_show_country_flag.val('false');
+						$wpua_show_ip_address.val('false');
 						$wpua_admin_only.val('false');
 						$wpua_output_location.val('before');
 						preview();
