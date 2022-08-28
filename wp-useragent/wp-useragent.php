@@ -1,15 +1,16 @@
 <?php
 /*
  * Plugin Name: WP-UserAgent [增强版 by obaby]
- * Plugin URI: https://www.kyleabaker.com/goodies/coding/wp-useragent/
- * Description: 加强版评论UA显示插件，支持显示国家以及当前用户归属地
- * Version: 11.0.3
+ * Plugin URI: https://wp.me/pbtmY7-2HX
+ * Description: 加强版评论UA显示插件，支持显示国家以及当前用户归属地以及IP地址。
+ * Version: 11.0.4
  * Author: Kyle Baker(Upgrade by obaby@mars)
- * Author URI: https://www.kyleabaker.com/
+ * Author URI: https://www.h4ck.org.cn
  * Text Domain: wp-useragent
  * Domain Path: /languages/
  * //Author: Fernando Briano
  * //Author URI: http://picandocodigo.net
+ * //Author URI: https://www.kyleabaker.com/
  * //Author URI: http://h4ck.org.cn
 */
 /* Copyright 2008-2017  Kyle Baker  (email: kyleabaker@gmail.com)
