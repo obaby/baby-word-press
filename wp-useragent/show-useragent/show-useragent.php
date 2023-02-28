@@ -21,10 +21,14 @@ function CID_get_flag($ip) {
 		$name = 'Localhost';
 	}else{
 	$country = CID_get_country($ip);
-	if (!$country) return "";
+	if (!$country && strpos($ip, ':')===false) return "";
 	
 	$code = strtolower($country['id2']);
 	$name = $country['name'];
+	}
+	if(strpos($ip, ':')){
+		 $code = 'ipv6';
+  	      $name = '未知位置';
 	}
 	if($name=='China'){
 	    $name = '来自天朝的朋友';
@@ -55,15 +59,14 @@ function CID_get_flag_without_template($ip, $show_image = true, $show_text = tru
 		$code = 'wordpress';
 		$name = 'Localhost';
 	}else{
-	 if(strpos($ip, ':')){
-		 $code = 'ipv6';
-  	      $name = '未知位置';
-	}else{
 			$country = CID_get_country($ip);
-			if (!$country) return "";
+			if (!$country && strpos($ip, ':')===false) return "";
 			$code = strtolower($country['id2']);
 			$name = $country['name'];
-		}
+	}
+	if(strpos($ip, ':')){
+		 $code = 'ipv6';
+  	      $name = '未知位置';
 	}
 	
 	$output = '';
