@@ -1,5 +1,10 @@
 <?php
 function convertip($ip) {
+	//*https://www.likecs.com/show-307719622.html*//
+	$ip1num = 0;
+  $ip2num = 0;
+  $ipAddr1 ="";
+  $ipAddr2 ="";
 	$dat_path = dirname(__FILE__).'/ip2c-qqwry.dat'; //*数据库路径*//
     if(!$fd = @fopen($dat_path, 'rb')){
         return 'IP date file not exists or access denied';
