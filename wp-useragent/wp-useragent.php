@@ -3,7 +3,7 @@
  * Plugin Name: WP-UserAgent [增强版 by obaby]
  * Plugin URI: https://wp.me/pbtmY7-2HX
  * Description: 加强版评论UA显示插件，支持显示国家以及当前用户归属地以及IP地址。
- * Version: 11.11.02
+ * Version: 12.01.01
  * Author: Kyle Baker(Upgrade by obaby@mars)
  * Author URI: https://www.h4ck.org.cn
  * Text Domain: wp-useragent
