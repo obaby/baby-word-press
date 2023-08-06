@@ -21,14 +21,10 @@ function CID_get_flag($ip) {
 		$name = 'Localhost';
 	}else{
 	$country = CID_get_country($ip);
-	if (!$country && strpos($ip, ':')===false) return "";
+	if (!$country) return "";
 	
 	$code = strtolower($country['id2']);
 	$name = $country['name'];
-	}
-	if(strpos($ip, ':')){
-		 $code = 'ipv6';
-  	      $name = '未知位置';
 	}
 	if($name=='China'){
 	    $name = '来自天朝的朋友';
@@ -42,14 +38,14 @@ function CID_get_flag($ip) {
 	if($name=='Japan'){
 	    $name = '这家伙可能用了岛国的代理';
 	}	
-	$output = stripslashes('<span class="country-flag"><img src="%IMAGE_BASE%/%COUNTRY_CODE%.png" title="%COUNTRY_NAME%" alt="%COUNTRY_NAME%" width="18" height="14" /></span>');
+	$output = stripslashes('<span class="country-flag"><img src="%IMAGE_BASE%/%COUNTRY_CODE%.svg" title="%COUNTRY_NAME%" alt="%COUNTRY_NAME%" width="18" height="14" /></span>');
 	
 	if (!$output) return "";
 	
 	$output = str_replace("%COUNTRY_CODE%", $code, $output);
 	$output = str_replace("%COUNTRY_NAME%", $name, $output);
 	$output = str_replace("%COMMENTER_IP%", $ip, $output);
-	$output = str_replace("%IMAGE_BASE%", WP_PLUGIN_URL.'/wp-useragent/show-useragent/flags', $output);
+	$output = str_replace("%IMAGE_BASE%", WP_PLUGIN_URL.'/wp-useragent/show-useragent/flags_svg', $output);
 	
 	return $output;
 }
@@ -59,20 +55,18 @@ function CID_get_flag_without_template($ip, $show_image = true, $show_text = tru
 		$code = 'wordpress';
 		$name = 'Localhost';
 	}else{
-			$country = CID_get_country($ip);
-			if (!$country && strpos($ip, ':')===false) return "";
-			$code = strtolower($country['id2']);
-			$name = $country['name'];
-	}
-	if(strpos($ip, ':')){
-		 $code = 'ipv6';
-  	      $name = '未知位置';
+
+	$country = CID_get_country($ip);
+	if (!$country) return "";
+	
+	$code = strtolower($country['id2']);
+	$name = $country['name'];
 	}
 	
 	$output = '';
 	
 	if ($show_image)
-		$output = '<img src="'.WP_PLUGIN_URL.'/wp-useragent/show-useragent/flags/' . $code . '.png" title="' . $name . '" alt="' . $name . '" class="country-flag" width="18" height="14" />';
+		$output = '<img src="'.WP_PLUGIN_URL.'/wp-useragent/show-useragent/flags_svg/' . $code . '.svg" title="' . $name . '" alt="' . $name . '" class="country-flag" width="18" height="14" />';
 	if ($show_text)
 		$output .= ' ' . $name;
 	

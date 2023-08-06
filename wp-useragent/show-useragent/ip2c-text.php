@@ -1,7 +1,6 @@
 <?php
 function convertip($ip) {
-	//*https://www.likecs.com/show-307719622.html*//
-	$ip1num = 0;
+	 $ip1num = 0;
   $ip2num = 0;
   $ipAddr1 ="";
   $ipAddr2 ="";

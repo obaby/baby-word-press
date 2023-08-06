@@ -3,7 +3,7 @@
  * Plugin Name: WP-UserAgent [增强版 by obaby]
  * Plugin URI: https://wp.me/pbtmY7-2HX
  * Description: 加强版评论UA显示插件，支持显示国家以及当前用户归属地以及IP地址。
- * Version: 12.01.01
+ * Version: 12.02.01
  * Author: Kyle Baker(Upgrade by obaby@mars)
  * Author URI: https://www.h4ck.org.cn
  * Text Domain: wp-useragent
@@ -262,7 +262,7 @@ function wpua_display_useragent($wpua_wrapper_div = false) {
      if ($wpua_show_ip_address === 'true') {
      	 if ($wpua_show_text_icons === 'icons_and_text' )
      	 {
-		$wpua_useragent.= '  '.  '<img src="'.WP_PLUGIN_URL.'/wp-useragent/img/' .$wpua_icon_size . '/network/ip3.png" title="ip address" alt="ip address" class="ip-address" width="$wpua_icon_size" height="$wpua_icon_size" />';
+		$wpua_useragent.= '  '.  '<img src="'.WP_PLUGIN_URL.'/wp-useragent/img/' .$wpua_icon_size . '/network/ip3.png" title="ip address" alt="ip address" class="ip-address" width="16" height="16" />';
 		 $wpua_useragent.= '  '. ip2unkonw($ip);
 		 }
 	if ($wpua_show_text_icons === 'text'){
