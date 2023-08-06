@@ -84,6 +84,10 @@ Some of you may compare this to another well-known plugin named browsersniff. WP
 
 == Changelog ==
 
+= v12.02.01 =
+* 替换部分图表为svg
+* 使用24像素图片替换16像素图片
+
 = v1.1.8 =
 * Fixed WP Hook bug introduced by upgrade to WP 5.5+
 
